@@ -1,0 +1,20 @@
+version: "2"
+services:
+
+  # Collector
+  otel-collector:
+    image: amazon/aws-otel-collector:latest
+    command: [ "--config=/etc/otel-agent-config.yaml" ]
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-agent-config.yaml
+      - ~/.aws:/home/aoc/.aws
+    ports:
+      - "1777:1777"   # pprof extension
+      - "55679:55679" # zpages extension
+      - "4317:4317" # OTLP receiver
+      - "4318:4318" # HTTP receiver
+      - "13133"       # health_check
