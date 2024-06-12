@@ -1,7 +1,7 @@
 version: "2"
 services:
 
-  # Collector
+  # ADOT Collector
   otel-collector:
     image: amazon/aws-otel-collector:latest
     command: [ "--config=/etc/otel-agent-config.yaml" ]
